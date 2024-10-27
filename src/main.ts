@@ -47,9 +47,10 @@ type Entity = {
   pos: Vec2;
   vel: Vec2;
   element: Element;
+  changed: boolean;
 };
 
-const ENTITY_SIZE = 10;
+const ENTITY_SIZE = 5;
 const ENTITY_SPEED = 1;
 
 const entities: Entity[] = [];
@@ -66,11 +67,12 @@ function clamp(value: number, min: number, max: number) {
 function createEntity(pos: Vec2, direction: number, element: Element) {
   const speed = ENTITY_SPEED * (Math.random() * 0.5 + 0.5);
   const vel: Vec2 = [Math.cos(direction) * speed, Math.sin(direction) * speed];
-  entities.push({ pos, vel, element });
+  entities.push({ pos, vel, element, changed: false });
   entityByElement[element].push(entities[entities.length - 1]);
 }
 
 function changeEntityElement(entity: Entity, element: Element) {
+  entity.changed = true;
   const index = entityByElement[entity.element].indexOf(entity);
   entityByElement[entity.element].splice(index, 1);
   entity.element = element;
@@ -113,6 +115,9 @@ function checkCollision(entity: Entity) {
       : "rock";
   const enemies = entityByElement[enemyElement];
   for (const enemy of enemies) {
+    if (entity.changed) {
+      continue;
+    }
     if (
       Math.hypot(entity.pos[0] - enemy.pos[0], entity.pos[1] - enemy.pos[1]) <
       ENTITY_SIZE * 2
@@ -156,7 +161,7 @@ function generateEntities(
   }
 }
 
-const COUNT = 50;
+const COUNT = 500;
 const SPREAD = 50;
 
 generateEntities([canvas.width / 4, canvas.height / 3], SPREAD, COUNT, "rock");
@@ -174,6 +179,9 @@ generateEntities(
 );
 
 function update() {
+  for (const entity of entities) {
+    entity.changed = false;
+  }
   for (const entity of entities) {
     updateEntity(entity);
     checkCollision(entity);
@@ -234,4 +242,8 @@ canvas.addEventListener("click", (event) => {
 document.getElementById("start-recording")!.addEventListener("click", () => {
   canvasRecorder.start();
   loop();
+});
+
+document.getElementById("stop-recording")!.addEventListener("click", () => {
+  canvasRecorder.stop();
 });
