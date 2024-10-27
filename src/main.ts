@@ -63,10 +63,8 @@ function clamp(value: number, min: number, max: number) {
 }
 
 function createEntity(pos: Vec2, direction: number, element: Element) {
-  const vel: Vec2 = [
-    Math.cos(direction) * ENTITY_SPEED,
-    Math.sin(direction) * ENTITY_SPEED,
-  ];
+  const speed = ENTITY_SPEED * (Math.random() * 0.5 + 0.5);
+  const vel: Vec2 = [Math.cos(direction) * speed, Math.sin(direction) * speed];
   entities.push({ pos, vel, element });
   entityByElement[element].push(entities[entities.length - 1]);
 }
@@ -148,28 +146,29 @@ function generateEntities(
 ) {
   for (let i = 0; i < count; i++) {
     const direction = Math.random() * Math.PI * 2;
+    const s = Math.random() * spread;
     const pos: Vec2 = [
-      around[0] + Math.cos(direction) * spread,
-      around[1] + Math.sin(direction) * spread,
+      around[0] + Math.cos(direction) * s,
+      around[1] + Math.sin(direction) * s,
     ];
     createEntity(pos, direction, element);
   }
 }
 
-const COUNT = 10;
+const COUNT = 50;
 const SPREAD = 50;
 
-generateEntities([canvas.width / 4, canvas.height / 3], COUNT, SPREAD, "rock");
+generateEntities([canvas.width / 4, canvas.height / 3], SPREAD, COUNT, "rock");
 generateEntities(
   [canvas.width / 2, (canvas.height / 3) * 2],
-  COUNT,
   SPREAD,
+  COUNT,
   "paper"
 );
 generateEntities(
   [(canvas.width / 4) * 3, canvas.height / 3],
-  COUNT,
   SPREAD,
+  COUNT,
   "scissors"
 );
 
