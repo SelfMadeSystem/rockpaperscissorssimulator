@@ -1,5 +1,5 @@
 {
-  "name": "tictactoesim",
+  "name": "rockpaperscissorssimulator",
   "version": "0.0.0",
   "devDependencies": {
     "typescript": "~5.6.2",
