@@ -2,7 +2,7 @@ import "./style.css";
 import rockImg from "./rock.svg";
 import paperImg from "./paper.svg";
 import scissorsImg from "./scissors.svg";
-import { Recorder, RecorderStatus, Encoders } from "canvas-record";
+import { Recorder, RecorderStatus } from "canvas-record";
 import createCanvasContext from "canvas-context";
 import { AVC } from "media-codecs";
 
@@ -50,7 +50,7 @@ type Entity = {
 
 const ENTITY_SIZE = 10;
 const ENTITY_SPEED = 1;
-20;
+
 const entities: Entity[] = [];
 const entityByElement: Record<Element, Entity[]> = {
   rock: [],
