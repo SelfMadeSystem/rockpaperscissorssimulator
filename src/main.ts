@@ -37,6 +37,7 @@ const canvasRecorder = new Recorder(ctx, {
   encoderOptions: {
     codec: AVC.getCodec({ profile: "Main", level: "2.1" }),
   },
+  frameRate: 60,
   duration: Infinity,
 });
 
