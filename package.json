@@ -1,0 +1,20 @@
+{
+  "name": "tictactoesim",
+  "version": "0.0.0",
+  "devDependencies": {
+    "typescript": "~5.6.2",
+    "vite": "^5.4.9"
+  },
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "type": "module",
+  "dependencies": {
+    "canvas-context": "^3.3.0",
+    "canvas-record": "^5.1.0",
+    "media-codecs": "^2.0.2"
+  }
+}
